@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "dinobytes"
+version = "0.1.0"
+description = ""
+authors = ["Kyle Dougan <kdougan@apple.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+ormsgpack = "^1.4.2"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
