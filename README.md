@@ -55,6 +55,95 @@ received_message = unpackd(serialized_message)
 print(received_message.content)  # Output: Hello, DinoBytes!
 ```
 
+### More examples
+
+```python
+from dataclasses import dataclass
+
+from dinobytes import dbyte, unpackd
+
+@dbyte
+class Parent:
+  def __init__(self, children: list[Child] | None =None):
+    self.children = children or []
+
+  def __repr__(self):
+    return f"Parent(children={self.children})"
+
+@dbyte
+@dataclass
+class Child:
+  name:str = '<default>'
+
+parent = Parent()
+child = Child(name="Jimothy")
+
+parent.children.append(child)
+
+serialized = bytes(parent)
+print(serialized)
+print(unpackd(serialized))
+```
+
+Output:
+
+```shell
+b'\x92\x00\x91\xc4\n\x92\x01\xa7Jimothy'
+Parent(children=[Child(name='Jimothy')])
+```
+
+---
+
+```python
+from dataclasses import dataclass
+
+from dinobytes import dbyte, unpackd
+
+
+@dbyte
+@dataclass
+class ClassA:
+  value: int
+
+@dbyte
+@dataclass
+class ClassB:
+  value: str
+
+@dbyte
+@dataclass
+class ClassC:
+  value:list[int]
+
+
+classA = ClassA(1)
+classB = ClassB('hello')
+classC = ClassC([1,2,3])
+
+for x in [
+  bytes(classB),
+  bytes(classC),
+  bytes(classA)
+]:
+  match unpackd(x):
+    case ClassA(value):
+      print(f'ClassA: {value=}')
+    case ClassB(value):
+      print(f'ClassB: {value=}')
+    case ClassC(value):
+      print(f'ClassC: {value=}')
+    case _:
+      print('unknown class')
+```
+
+Output:
+
+```shell
+ClassB: value='hello'
+ClassC: value=[1, 2, 3]
+ClassA: value=1
+```
+
 ## Contributing
 
 Contributions to DinoBytes are welcome! Whether it's bug reports, feature requests, or code contributions, please feel free to reach out or submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
