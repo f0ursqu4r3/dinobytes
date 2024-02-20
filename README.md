@@ -6,11 +6,11 @@ DinoBytes is a dynamic serialization framework designed to simplify network comm
 
 ## Features
 
-- **Automatic Message Type Registration**: Utilizes a decorator to automatically register message types and assign unique identifiers, ensuring a smooth serialization and deserialization process.
-- **Simplified Serialization**: Offers a straightforward method (`to_bytes`) for converting message objects into serialized bytes.
-- **Effortless Deserialization**: Allows for easy conversion of bytes back into message objects using the `from_bytes` method, facilitating quick and reliable message parsing.
-- **Streamlined Message Definition**: Leverages Python's dataclass decorator within the custom `cerealbox` decorator to reduce boilerplate and enhance readability when defining new message types.
-- **Message Registry**: Automatically maintains a registry of message types, simplifying the process of managing different kinds of network messages within your application.
+- **Automatic Message Type Registration**: Utilizes a decorator to automatically register class types and assign unique identifiers, ensuring a smooth serialization and deserialization process.
+- **Simplified Serialization**: Offers a straightforward method (`to_bytes`) for converting class objects into serialized bytes.
+- **Effortless Deserialization**: Allows for easy conversion of bytes back into class objects using the `from_bytes` method, facilitating quick and reliable class parsing.
+- **Streamlined Message Definition**: Leverages Python's dataclass decorator within the custom `dbyte` decorator to reduce boilerplate and enhance readability when defining new class types.
+- **Message Registry**: Automatically maintains a registry of class types, simplifying the process of managing different kinds of network messages within your application.
 
 ## Installation
 
@@ -25,9 +25,9 @@ pip install dinobytes
 ### Defining a Message
 
 ```python
-from dinobytes import cerealbox
+from dinobytes import dbyte
 
-@cerealbox
+@dbyte
 class MyMessage:
     content: str
 ```
@@ -46,12 +46,12 @@ received_message = MyMessage.from_bytes(serialized_message)
 print(received_message.content)  # Output: Hello, DinoBytes!
 ```
 
-The `consume` convenience method can also be used to automatically unpack into the correct type:
+The `unpackd` convenience method can also be used to automatically unpack into the correct type:
 
 ```python
-from dinobytes import consume
+from dinobytes import unpackd
 
-received_message = consume(serialized_message)
+received_message = unpackd(serialized_message)
 print(received_message.content)  # Output: Hello, DinoBytes!
 ```
 
@@ -61,4 +61,4 @@ Contributions to DinoBytes are welcome! Whether it's bug reports, feature reques
 
 ## License
 
-DinoBytes is released under the Apache 2 License. See the LICENSE file for more details.
+DinoBytes is released under the Apache 2.0 License. See the LICENSE file for more details.
